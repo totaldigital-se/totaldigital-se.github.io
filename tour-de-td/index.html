@@ -363,6 +363,7 @@
     }
     .row {
       height: 100%;
+      width: 100%;
       /* display: flex; */
       align-items: center;
       justify-content: center;
@@ -494,8 +495,8 @@
     .top-left, .top-right {
   position: absolute;
   top: 80px;
-  width: auto;
-  height: auto;
+  /* width: auto;
+  height: auto; */
   padding: 10px 20px;
   background-color: rgba(255, 255, 255, 0.129);
   /* color: white; */
@@ -503,11 +504,13 @@
 }
     .top-left {
   left: 2px;
-  
+   width: auto;
+  height: auto;
 }
     .top-right {
   right: 20px;
- 
+  width: 35%;
+  right: 2px;
   /* background-color: white; */
 }
     .corner-div {
@@ -661,9 +664,19 @@
       .top-center {
         width: 24%;
       }
+      .top-right {
+        right: 20px;
+        width: 60%;
+        /* height: 50%; */
+        right: 2px;
+      }
+      .chartContainer{
+        width: 210px;
+        height: 210px;
+      }
     }
   </style>
-  <script type="module" crossorigin src="./assets/index-pC-AB0zi.js"></script>
+  <script type="module" crossorigin src="./assets/index-BAR0tVRN.js"></script>
 </head>
 <body>
   <div class="main-container">
@@ -743,7 +756,7 @@
      
       <div class="row">
         <div id="chartParent">
-          <div id="chartContainerAmounthPerSport" style="height: 100%; width: 80%"></div>
+          <div id="chartContainerAmounthPerSport" class="chartContainer" style="height: 100%; width: 80%; right:2px"></div>
         </div>
       </div>
 
