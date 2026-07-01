@@ -370,7 +370,100 @@
   .today-chip-km{font-size:0.58rem;color:var(--muted);font-weight:400;margin-left:2px;}
   .today-empty{font-size:0.72rem;color:var(--muted2);font-style:italic;}
 
+
+  /* ── ENERGY METER ── */
+  .energy-meter{
+    display:flex;align-items:center;gap:10px;
+    flex-shrink:0;
+  }
+  .energy-label{
+    font-size:0.55rem;text-transform:uppercase;letter-spacing:0.1em;
+    color:var(--muted);font-weight:700;white-space:nowrap;
+  }
+  .energy-bar{
+    display:flex;gap:3px;align-items:center;
+  }
+  .energy-dot{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--border);
+    transition:background 0.4s ease, transform 0.4s ease;
+    flex-shrink:0;
+  }
+  .energy-dot.lit{
+    background:var(--accent);
+    box-shadow:0 0 6px rgba(45,122,58,0.5);
+  }
+  .energy-dot.lit.pulse{
+    animation:energyPulse 1.2s ease-in-out infinite;
+  }
+  .energy-dot.lit.pulse:nth-child(2){ animation-delay:0.15s; }
+  .energy-dot.lit.pulse:nth-child(3){ animation-delay:0.30s; }
+  .energy-dot.lit.pulse:nth-child(4){ animation-delay:0.45s; }
+  .energy-dot.lit.pulse:nth-child(5){ animation-delay:0.60s; }
+  @keyframes energyPulse{
+    0%,100%{ transform:scale(1);   box-shadow:0 0 5px rgba(45,122,58,0.4); }
+    50%{     transform:scale(1.45);box-shadow:0 0 12px rgba(45,122,58,0.75); }
+  }
+  /* high energy: golden pulse */
+  .energy-dot.lit.pulse.gold{
+    background:var(--sun);
+    animation:energyPulseGold 0.9s ease-in-out infinite;
+    box-shadow:0 0 8px rgba(245,158,11,0.6);
+  }
+  @keyframes energyPulseGold{
+    0%,100%{ transform:scale(1);   box-shadow:0 0 6px rgba(245,158,11,0.5); }
+    50%{     transform:scale(1.5); box-shadow:0 0 16px rgba(245,158,11,0.9); }
+  }
+  /* max energy: strawberry red flash */
+  .energy-dot.lit.pulse.fire{
+    animation:energyPulseFire 0.7s ease-in-out infinite;
+  }
+  @keyframes energyPulseFire{
+    0%,100%{ transform:scale(1);   background:#e74c3c; box-shadow:0 0 6px rgba(231,76,60,0.5); }
+    50%{     transform:scale(1.6); background:#ff6b55; box-shadow:0 0 18px rgba(231,76,60,0.9); }
+  }
+  .energy-badge{
+    font-size:0.62rem;font-weight:700;
+    padding:2px 8px;border-radius:10px;
+    white-space:nowrap;
+    transition:all 0.4s ease;
+  }
+  .energy-badge.low  { background:var(--surface2);color:var(--muted); }
+  .energy-badge.mid  { background:#e8f5e0;color:var(--accent);border:1px solid #a8cc9e; }
+  .energy-badge.high { background:#fff3cd;color:#b45309;border:1px solid #fcd34d; animation:badgeBounce 2s ease-in-out infinite; }
+  .energy-badge.fire { background:#fdf0ee;color:var(--strawberry);border:1px solid var(--strawberry-light); animation:badgeBounce 1.2s ease-in-out infinite; }
+  @keyframes badgeBounce{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.06); }
+  }
   @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  /* ── SPORT TYPE BREAKDOWN ── */
+  .sport-breakdown{
+    margin-top:8px;
+    border-top:1px dashed var(--border);
+    padding-top:8px;
+  }
+  .sport-breakdown-label{
+    font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;
+    color:var(--muted);font-weight:700;margin-bottom:5px;
+  }
+  .sport-pills{display:flex;flex-wrap:wrap;gap:4px;}
+  .sport-pill{
+    display:flex;align-items:center;gap:4px;
+    background:white;border:1px solid var(--border);
+    border-radius:12px;padding:2px 8px;
+    font-size:0.62rem;font-weight:700;color:var(--text);
+    white-space:nowrap;
+  }
+  .sport-pill-count{
+    background:var(--accent);color:white;
+    border-radius:8px;padding:0px 5px;
+    font-size:0.58rem;font-weight:700;min-width:16px;text-align:center;
+  }
+  .sport-pill.today-pill .sport-pill-count{
+    background:#d97706;
+  }
+
 
   /* ── SMULTRONSTÄLLE PANEL ── */
   .place-panel-overlay{
@@ -760,6 +853,17 @@
           <div class="today-badge-val" id="today-km">—</div>
         </div>
       </div>
+      <div class="energy-meter">
+        <span class="energy-label">Energi</span>
+        <div class="energy-bar" id="energy-bar">
+          <div class="energy-dot" id="ed1"></div>
+          <div class="energy-dot" id="ed2"></div>
+          <div class="energy-dot" id="ed3"></div>
+          <div class="energy-dot" id="ed4"></div>
+          <div class="energy-dot" id="ed5"></div>
+        </div>
+        <span class="energy-badge low" id="energy-badge">—</span>
+      </div>
       <div class="today-divider"></div>
       <div class="today-contributors">
         <span class="today-contributors-label">Bidragit idag:</span>
@@ -856,6 +960,10 @@
         <div class="milestone-mini-bar">
           <div class="milestone-mini-fill" id="milestone-fill" style="width:0%"></div>
         </div>
+      </div>
+      <div class="sport-breakdown">
+        <div class="sport-breakdown-label">Sport totalt</div>
+        <div class="sport-pills" id="total-sport-pills"></div>
       </div>
     </div>
   </div>
@@ -1409,24 +1517,92 @@ function render() {
   const todayActs = (window._activities||[]).filter(a => a.date === todayStr);
   const todayKm = todayActs.reduce((s,a) => s + calcKm(a), 0);
   // Group by athlete
+  // Group by athlete, also track their sport types today
   const todayByAthlete = {};
   todayActs.forEach(a => {
-    if (!todayByAthlete[a.athlete]) todayByAthlete[a.athlete] = 0;
-    todayByAthlete[a.athlete] += calcKm(a);
+    if (!todayByAthlete[a.athlete]) todayByAthlete[a.athlete] = { km: 0, types: [] };
+    todayByAthlete[a.athlete].km += calcKm(a);
+    if (!todayByAthlete[a.athlete].types.includes(a.type)) todayByAthlete[a.athlete].types.push(a.type);
   });
   document.getElementById('today-count').textContent = todayActs.length;
+
+  // ── ENERGY METER ──
+  // Score: how many unique people contributed today vs total active members
+  const todayContributors = Object.keys(todayByAthlete).length;
+  const totalMembers = Math.max(memberCount, 1);
+  // Energy level 0–5 based on fraction of team active today
+  const fraction = todayContributors / totalMembers;
+  let energyLevel, energyText, energyClass;
+  if (todayContributors === 0)      { energyLevel=0; energyText='Vilodagen'; energyClass='low'; }
+  else if (fraction < 0.2)          { energyLevel=1; energyText='Uppvärmning'; energyClass='low'; }
+  else if (fraction < 0.35)         { energyLevel=2; energyText='På gång!'; energyClass='mid'; }
+  else if (fraction < 0.55)         { energyLevel=3; energyText='Bra fart! 💪'; energyClass='mid'; }
+  else if (fraction < 0.8)          { energyLevel=4; energyText='Hettar till! 🔥'; energyClass='high'; }
+  else                               { energyLevel=5; energyText='Laganda!! 🍓🔥'; energyClass='fire'; }
+
+  for (let i = 1; i <= 5; i++) {
+    const dot = document.getElementById('ed' + i);
+    dot.className = 'energy-dot';
+    if (i <= energyLevel) {
+      dot.classList.add('lit');
+      if (energyLevel >= 3) {
+        dot.classList.add('pulse');
+        if (energyLevel === 4) dot.classList.add('gold');
+        if (energyLevel === 5) dot.classList.add('fire');
+      }
+    }
+  }
+  const badge = document.getElementById('energy-badge');
+  badge.textContent = energyText;
+  badge.className = 'energy-badge ' + energyClass;
   document.getElementById('today-km').textContent = todayKm.toFixed(1) + ' km';
+
+  // ── SPORT TYPE BREAKDOWNS ──
+  const SPORT_ICONS = {
+    'Run':'🏃','Ride':'🚴','Walk':'🚶','Swim':'🏊','Yoga':'🧘',
+    'Hike':'🥾','Crossfit':'🏋️','WeightTraining':'🏋️','Rowing':'🚣',
+    'Soccer':'⚽','Handball':'🤾','Innebandy':'🏒','Floorball':'🏒',
+    'IceSkate':'⛸️','AlpineSki':'⛷️','NordicSki':'🎿','Surfing':'🏄',
+    'Kayaking':'🛶','Canoeing':'🛶','Tennis':'🎾','Badminton':'🏸',
+    'TableTennis':'🏓','Golf':'⛳','Pilates':'🧘','Dance':'💃',
+    'Workout':'💪','VirtualRide':'🚴','VirtualRun':'🏃','Löpning':'🏃',
+    'Cykling':'🚴','Simning':'🏊','Promenad':'🚶','Vandring':'🥾',
+    'Rodd':'🚣','Övrigt':'⚡',
+  };
+  function sportIcon(type) {
+    return SPORT_ICONS[type] || '⚡';
+  }
+  function renderSportPills(containerId, acts, pillClass) {
+    const counts = {};
+    acts.forEach(a => { counts[a.type] = (counts[a.type]||0) + 1; });
+    const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+    const el = document.getElementById(containerId);
+    if (sorted.length === 0) { el.innerHTML = '<span style="font-size:0.65rem;color:var(--muted2);font-style:italic">Inga aktiviteter</span>'; return; }
+    el.innerHTML = sorted.map(([type, count]) =>
+      `<div class="sport-pill ${pillClass||''}">
+        <span>${sportIcon(type)}</span>
+        <span>${type}</span>
+        <span class="sport-pill-count">${count}</span>
+      </div>`
+    ).join('');
+  }
+
+  // Total sports
+  renderSportPills('total-sport-pills', window._activities || [], '');
+
   const chips = document.getElementById('today-chips');
   if (Object.keys(todayByAthlete).length === 0) {
     chips.innerHTML = `<span class="today-empty">Ingen aktivitet loggad ännu idag</span>`;
   } else {
     chips.innerHTML = Object.entries(todayByAthlete)
-      .sort((a,b) => b[1]-a[1])
-      .map(([name, km]) => `
-        <div class="today-chip">
-          <div class="today-chip-dot"></div>
-          ${name}<span class="today-chip-km">${km.toFixed(1)} km</span>
-        </div>`).join('');
+      .sort((a,b) => b[1].km - a[1].km)
+      .map(([name, data]) => {
+        const icons = data.types.map(t => sportIcon(t)).join('');
+        return `<div class="today-chip">
+          <span style="font-size:0.85rem;line-height:1">${icons}</span>
+          ${name}<span class="today-chip-km">${data.km.toFixed(1)} km</span>
+        </div>`;
+      }).join('');
   }
 }
 
